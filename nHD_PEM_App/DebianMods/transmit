@@ -1,0 +1,32 @@
+#!/bin/sh
+# usage:
+# transmit <IP Address> <file version>
+#
+# Ex:
+#   transmit 10.10.0.31 lc4500_main_v0.7.2
+#
+# parameters are optional but IP must exist if file version exists
+#
+DefaultAddress=beaglebone-grn1
+DefaultFilename=lc4500_main
+
+if [$1 == ""] ; then
+	target=root@$DefaultAddress
+else
+	target=root@$1
+fi
+echo "  Attempting to access target unit at " $target
+
+LocalDate=`date +'%Y-%m-%d %H:%M:%S'`
+echo setting target date to $LocalDate
+rsh $target date --set=\""$LocalDate"\"
+
+if [$2 == ""] ; then
+	Filename=$DefaultFilename
+else
+	Filename=$2
+fi
+echo copying $Filename to target
+scp $Filename $target:/root/.
+
+
