@@ -1834,18 +1834,6 @@ void MainWindow::on_StaticImageUploadIndexed_Button_clicked()
         return;
     }
 
-    // Check that the DM365 code version is correct (>v5.3.7)
-    if( (verDM365Major < 5)       ||
-        ((verDM365Major == 5) &&
-         (verDM365Minor <  3) )   ||
-        ((verDM365Major == 5) &&
-         (verDM365Minor == 3) &&
-         (verDM365Build < 7)   )   )
-    {
-        showError("The indexed version of this feature is only available with DM365 version 5.3.7 or greater.");
-        return;
-    }
-
     if(packetHandler.writeCommand(0x0115))
         return;
 
