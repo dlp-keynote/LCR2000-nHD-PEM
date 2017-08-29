@@ -27,30 +27,19 @@ or
   vi /etc/hostname
 
 
-==> Run one of the following scripts depending on your situation to copy and install the needed components into the BB environment:
-   => For local build/run of application run the following from the BB command line:
- git clone http://keynote2.com/nHD_PEM nHD_App_Source
- cd nHD_App_Source/DebianMods
- ./install_local.sh
-(This is the script to install files if they are already on the BB)
+Next, clone this application repository to the Beaglebone
 
-or => For remote installation from a development machine, run the following from the command line of the development machine:
-(if needed modify target=root@beaglebone.local to the target BB name/IP address)
- vi install_remote.sh
- ./install_remote.sh
-(This is the script to copy and install the files onto a BB from a development environment)
+git clone https://github.com/keynotep/LCR2000-nHD-PEM/nHD_PEM_App
 
-==> You will need to manually log into the BB and edit /boot/uEnv.txt:
-   - Add the following line to remove 10 minute display turn-off
- optargs="consoleblank=0"
-   - Turn off X-Windows by adding the word 'text' to the command line.  It should look something like this when you are done:
- cmdline=text dms.debug=7 coherent_pool=1M quiet init=/lib/systemd/systemd
-   - Uncomment the line that disables HDMI.  It is not compatible with SPI or the DRM modes used in the DDM application.
+ cd nHD_PEM_App/DebianMods
+ ./pem_install.sh
+
+==> Note that /boot/uEnv.txt will be modified:
+   - Adds the following line to remove 10 minute display turn-off
+          optargs="consoleblank=0"
+   - Turns off X-Windows by adding the word 'text' to the command line.  It should look something like this when you are done:
+          cmdline=text dms.debug=7 coherent_pool=1M quiet init=/lib/systemd/systemd
+   - Disables HDMI.  
  ##Disable HDMI (v3.8.x)
- cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
-
-To install local development, the following must be done (or uncomment these steps in the install scripts to perform the steps as part of the above process:
-=====================================================================================================================
- - Install Headers
- - Install Source code
+          cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
 
